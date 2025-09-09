@@ -1,0 +1,44 @@
+"use strict";
+
+var _Check = require("../Check");
+var _CheckGroup = _interopRequireDefault(require("../CheckGroup"));
+var _Config = _interopRequireDefault(require("../../Config"));
+var _node = _interopRequireDefault(require("parse/node"));
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
+/**
+ * The security checks group for Parse Server configuration.
+ * Checks common Parse Server parameters such as access keys
+ * @memberof module:SecurityCheck
+ */
+class CheckGroupDatabase extends _CheckGroup.default {
+  setName() {
+    return 'Database';
+  }
+  setChecks() {
+    const config = _Config.default.get(_node.default.applicationId);
+    const databaseAdapter = config.database.adapter;
+    const databaseUrl = databaseAdapter._uri;
+    return [new _Check.Check({
+      title: 'Secure database password',
+      warning: 'The database password is insecure and vulnerable to brute force attacks.',
+      solution: 'Choose a longer and/or more complex password with a combination of upper- and lowercase characters, numbers and special characters.',
+      check: () => {
+        const password = databaseUrl.match(/\/\/\S+:(\S+)@/)[1];
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+        const hasNonAlphasNumerics = /\W/.test(password);
+        // Ensure length
+        if (password.length < 14) {
+          throw 1;
+        }
+        // Ensure at least 3 out of 4 requirements passed
+        if (hasUpperCase + hasLowerCase + hasNumbers + hasNonAlphasNumerics < 3) {
+          throw 1;
+        }
+      }
+    })];
+  }
+}
+module.exports = CheckGroupDatabase;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJfQ2hlY2siLCJyZXF1aXJlIiwiX0NoZWNrR3JvdXAiLCJfaW50ZXJvcFJlcXVpcmVEZWZhdWx0IiwiX0NvbmZpZyIsIl9ub2RlIiwiZSIsIl9fZXNNb2R1bGUiLCJkZWZhdWx0IiwiQ2hlY2tHcm91cERhdGFiYXNlIiwiQ2hlY2tHcm91cCIsInNldE5hbWUiLCJzZXRDaGVja3MiLCJjb25maWciLCJDb25maWciLCJnZXQiLCJQYXJzZSIsImFwcGxpY2F0aW9uSWQiLCJkYXRhYmFzZUFkYXB0ZXIiLCJkYXRhYmFzZSIsImFkYXB0ZXIiLCJkYXRhYmFzZVVybCIsIl91cmkiLCJDaGVjayIsInRpdGxlIiwid2FybmluZyIsInNvbHV0aW9uIiwiY2hlY2siLCJwYXNzd29yZCIsIm1hdGNoIiwiaGFzVXBwZXJDYXNlIiwidGVzdCIsImhhc0xvd2VyQ2FzZSIsImhhc051bWJlcnMiLCJoYXNOb25BbHBoYXNOdW1lcmljcyIsImxlbmd0aCIsIm1vZHVsZSIsImV4cG9ydHMiXSwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvU2VjdXJpdHkvQ2hlY2tHcm91cHMvQ2hlY2tHcm91cERhdGFiYXNlLmpzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENoZWNrIH0gZnJvbSAnLi4vQ2hlY2snO1xuaW1wb3J0IENoZWNrR3JvdXAgZnJvbSAnLi4vQ2hlY2tHcm91cCc7XG5pbXBvcnQgQ29uZmlnIGZyb20gJy4uLy4uL0NvbmZpZyc7XG5pbXBvcnQgUGFyc2UgZnJvbSAncGFyc2Uvbm9kZSc7XG5cbi8qKlxuICogVGhlIHNlY3VyaXR5IGNoZWNrcyBncm91cCBmb3IgUGFyc2UgU2VydmVyIGNvbmZpZ3VyYXRpb24uXG4gKiBDaGVja3MgY29tbW9uIFBhcnNlIFNlcnZlciBwYXJhbWV0ZXJzIHN1Y2ggYXMgYWNjZXNzIGtleXNcbiAqIEBtZW1iZXJvZiBtb2R1bGU6U2VjdXJpdHlDaGVja1xuICovXG5jbGFzcyBDaGVja0dyb3VwRGF0YWJhc2UgZXh0ZW5kcyBDaGVja0dyb3VwIHtcbiAgc2V0TmFtZSgpIHtcbiAgICByZXR1cm4gJ0RhdGFiYXNlJztcbiAgfVxuICBzZXRDaGVja3MoKSB7XG4gICAgY29uc3QgY29uZmlnID0gQ29uZmlnLmdldChQYXJzZS5hcHBsaWNhdGlvbklkKTtcbiAgICBjb25zdCBkYXRhYmFzZUFkYXB0ZXIgPSBjb25maWcuZGF0YWJhc2UuYWRhcHRlcjtcbiAgICBjb25zdCBkYXRhYmFzZVVybCA9IGRhdGFiYXNlQWRhcHRlci5fdXJpO1xuICAgIHJldHVybiBbXG4gICAgICBuZXcgQ2hlY2soe1xuICAgICAgICB0aXRsZTogJ1NlY3VyZSBkYXRhYmFzZSBwYXNzd29yZCcsXG4gICAgICAgIHdhcm5pbmc6ICdUaGUgZGF0YWJhc2UgcGFzc3dvcmQgaXMgaW5zZWN1cmUgYW5kIHZ1bG5lcmFibGUgdG8gYnJ1dGUgZm9yY2UgYXR0YWNrcy4nLFxuICAgICAgICBzb2x1dGlvbjpcbiAgICAgICAgICAnQ2hvb3NlIGEgbG9uZ2VyIGFuZC9vciBtb3JlIGNvbXBsZXggcGFzc3dvcmQgd2l0aCBhIGNvbWJpbmF0aW9uIG9mIHVwcGVyLSBhbmQgbG93ZXJjYXNlIGNoYXJhY3RlcnMsIG51bWJlcnMgYW5kIHNwZWNpYWwgY2hhcmFjdGVycy4nLFxuICAgICAgICBjaGVjazogKCkgPT4ge1xuICAgICAgICAgIGNvbnN0IHBhc3N3b3JkID0gZGF0YWJhc2VVcmwubWF0Y2goL1xcL1xcL1xcUys6KFxcUyspQC8pWzFdO1xuICAgICAgICAgIGNvbnN0IGhhc1VwcGVyQ2FzZSA9IC9bQS1aXS8udGVzdChwYXNzd29yZCk7XG4gICAgICAgICAgY29uc3QgaGFzTG93ZXJDYXNlID0gL1thLXpdLy50ZXN0KHBhc3N3b3JkKTtcbiAgICAgICAgICBjb25zdCBoYXNOdW1iZXJzID0gL1xcZC8udGVzdChwYXNzd29yZCk7XG4gICAgICAgICAgY29uc3QgaGFzTm9uQWxwaGFzTnVtZXJpY3MgPSAvXFxXLy50ZXN0KHBhc3N3b3JkKTtcbiAgICAgICAgICAvLyBFbnN1cmUgbGVuZ3RoXG4gICAgICAgICAgaWYgKHBhc3N3b3JkLmxlbmd0aCA8IDE0KSB7XG4gICAgICAgICAgICB0aHJvdyAxO1xuICAgICAgICAgIH1cbiAgICAgICAgICAvLyBFbnN1cmUgYXQgbGVhc3QgMyBvdXQgb2YgNCByZXF1aXJlbWVudHMgcGFzc2VkXG4gICAgICAgICAgaWYgKGhhc1VwcGVyQ2FzZSArIGhhc0xvd2VyQ2FzZSArIGhhc051bWJlcnMgKyBoYXNOb25BbHBoYXNOdW1lcmljcyA8IDMpIHtcbiAgICAgICAgICAgIHRocm93IDE7XG4gICAgICAgICAgfVxuICAgICAgICB9LFxuICAgICAgfSksXG4gICAgXTtcbiAgfVxufVxuXG5tb2R1bGUuZXhwb3J0cyA9IENoZWNrR3JvdXBEYXRhYmFzZTtcbiJdLCJtYXBwaW5ncyI6Ijs7QUFBQSxJQUFBQSxNQUFBLEdBQUFDLE9BQUE7QUFDQSxJQUFBQyxXQUFBLEdBQUFDLHNCQUFBLENBQUFGLE9BQUE7QUFDQSxJQUFBRyxPQUFBLEdBQUFELHNCQUFBLENBQUFGLE9BQUE7QUFDQSxJQUFBSSxLQUFBLEdBQUFGLHNCQUFBLENBQUFGLE9BQUE7QUFBK0IsU0FBQUUsdUJBQUFHLENBQUEsV0FBQUEsQ0FBQSxJQUFBQSxDQUFBLENBQUFDLFVBQUEsR0FBQUQsQ0FBQSxLQUFBRSxPQUFBLEVBQUFGLENBQUE7QUFFL0I7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBLE1BQU1HLGtCQUFrQixTQUFTQyxtQkFBVSxDQUFDO0VBQzFDQyxPQUFPQSxDQUFBLEVBQUc7SUFDUixPQUFPLFVBQVU7RUFDbkI7RUFDQUMsU0FBU0EsQ0FBQSxFQUFHO0lBQ1YsTUFBTUMsTUFBTSxHQUFHQyxlQUFNLENBQUNDLEdBQUcsQ0FBQ0MsYUFBSyxDQUFDQyxhQUFhLENBQUM7SUFDOUMsTUFBTUMsZUFBZSxHQUFHTCxNQUFNLENBQUNNLFFBQVEsQ0FBQ0MsT0FBTztJQUMvQyxNQUFNQyxXQUFXLEdBQUdILGVBQWUsQ0FBQ0ksSUFBSTtJQUN4QyxPQUFPLENBQ0wsSUFBSUMsWUFBSyxDQUFDO01BQ1JDLEtBQUssRUFBRSwwQkFBMEI7TUFDakNDLE9BQU8sRUFBRSwwRUFBMEU7TUFDbkZDLFFBQVEsRUFDTixxSUFBcUk7TUFDdklDLEtBQUssRUFBRUEsQ0FBQSxLQUFNO1FBQ1gsTUFBTUMsUUFBUSxHQUFHUCxXQUFXLENBQUNRLEtBQUssQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUN2RCxNQUFNQyxZQUFZLEdBQUcsT0FBTyxDQUFDQyxJQUFJLENBQUNILFFBQVEsQ0FBQztRQUMzQyxNQUFNSSxZQUFZLEdBQUcsT0FBTyxDQUFDRCxJQUFJLENBQUNILFFBQVEsQ0FBQztRQUMzQyxNQUFNSyxVQUFVLEdBQUcsSUFBSSxDQUFDRixJQUFJLENBQUNILFFBQVEsQ0FBQztRQUN0QyxNQUFNTSxvQkFBb0IsR0FBRyxJQUFJLENBQUNILElBQUksQ0FBQ0gsUUFBUSxDQUFDO1FBQ2hEO1FBQ0EsSUFBSUEsUUFBUSxDQUFDTyxNQUFNLEdBQUcsRUFBRSxFQUFFO1VBQ3hCLE1BQU0sQ0FBQztRQUNUO1FBQ0E7UUFDQSxJQUFJTCxZQUFZLEdBQUdFLFlBQVksR0FBR0MsVUFBVSxHQUFHQyxvQkFBb0IsR0FBRyxDQUFDLEVBQUU7VUFDdkUsTUFBTSxDQUFDO1FBQ1Q7TUFDRjtJQUNGLENBQUMsQ0FBQyxDQUNIO0VBQ0g7QUFDRjtBQUVBRSxNQUFNLENBQUNDLE9BQU8sR0FBRzVCLGtCQUFrQiIsImlnbm9yZUxpc3QiOltdfQ==

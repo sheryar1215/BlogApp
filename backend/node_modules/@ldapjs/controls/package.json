@@ -1,0 +1,45 @@
+{
+  "name": "@ldapjs/controls",
+  "version": "2.1.0",
+  "description": "LDAP control objects",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:ci": "eslint .",
+    "test": "tap --no-coverage-report -R terse",
+    "test:cov": "tap -R terse",
+    "test:cov:html": "tap -R terse --coverage-report=html",
+    "test:watch": "tap -w --no-coverage-report -R terse"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ldapjs/controls.git"
+  },
+  "keywords": [
+    "ldapjs"
+  ],
+  "author": "James Sumners",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ldapjs/controls/issues"
+  },
+  "homepage": "https://github.com/ldapjs/controls#readme",
+  "devDependencies": {
+    "@fastify/pre-commit": "^2.0.2",
+    "eslint": "^8.34.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "tap": "^16.3.4"
+  },
+  "dependencies": {
+    "@ldapjs/asn1": "^1.2.0",
+    "@ldapjs/protocol": "^1.2.1"
+  },
+  "pre-commit": [
+    "lint",
+    "test"
+  ]
+}

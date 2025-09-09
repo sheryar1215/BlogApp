@@ -1,0 +1,5 @@
+files:
+  - 'index.test.js'
+  - 'lib/**/*.test.js'
+
+coverage-map: coverage-map.js

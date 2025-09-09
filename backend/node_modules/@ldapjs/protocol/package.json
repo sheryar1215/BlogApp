@@ -1,0 +1,37 @@
+{
+  "name": "@ldapjs/protocol",
+  "version": "1.2.1",
+  "description": "Provides constants for LDAP ASN.1 tags and values.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:ci": "eslint .",
+    "test": "tap --no-cov -R terse",
+    "test:ci": "tap --coverage-report=lcovonly -R terse",
+    "test:cov": "tap -R terse",
+    "test:cov:html": "tap --coverage-report=html -R terse",
+    "test:watch": "tap -n -w --no-coverage-report -R terse"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ldapjs/protocol.git"
+  },
+  "keywords": [
+    "ldapjs"
+  ],
+  "author": "James Sumners",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ldapjs/protocol/issues"
+  },
+  "homepage": "https://github.com/ldapjs/protocol#readme",
+  "devDependencies": {
+    "@fastify/pre-commit": "^2.0.2",
+    "eslint": "^8.17.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "tap": "^16.2.0"
+  }
+}

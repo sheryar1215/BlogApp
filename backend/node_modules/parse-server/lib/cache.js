@@ -1,0 +1,12 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = exports.AppCache = void 0;
+var _InMemoryCache = require("./Adapters/Cache/InMemoryCache");
+var AppCache = exports.AppCache = new _InMemoryCache.InMemoryCache({
+  ttl: NaN
+});
+var _default = exports.default = AppCache;
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJfSW5NZW1vcnlDYWNoZSIsInJlcXVpcmUiLCJBcHBDYWNoZSIsImV4cG9ydHMiLCJJbk1lbW9yeUNhY2hlIiwidHRsIiwiTmFOIiwiX2RlZmF1bHQiLCJkZWZhdWx0Il0sInNvdXJjZXMiOlsiLi4vc3JjL2NhY2hlLmpzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEluTWVtb3J5Q2FjaGUgfSBmcm9tICcuL0FkYXB0ZXJzL0NhY2hlL0luTWVtb3J5Q2FjaGUnO1xuXG5leHBvcnQgdmFyIEFwcENhY2hlID0gbmV3IEluTWVtb3J5Q2FjaGUoeyB0dGw6IE5hTiB9KTtcbmV4cG9ydCBkZWZhdWx0IEFwcENhY2hlO1xuIl0sIm1hcHBpbmdzIjoiOzs7Ozs7QUFBQSxJQUFBQSxjQUFBLEdBQUFDLE9BQUE7QUFFTyxJQUFJQyxRQUFRLEdBQUFDLE9BQUEsQ0FBQUQsUUFBQSxHQUFHLElBQUlFLDRCQUFhLENBQUM7RUFBRUMsR0FBRyxFQUFFQztBQUFJLENBQUMsQ0FBQztBQUFDLElBQUFDLFFBQUEsR0FBQUosT0FBQSxDQUFBSyxPQUFBLEdBQ3ZDTixRQUFRIiwiaWdub3JlTGlzdCI6W119

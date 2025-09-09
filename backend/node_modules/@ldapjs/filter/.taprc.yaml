@@ -1,0 +1,10 @@
+reporter: terse
+coverage-map: coverage-map.js
+
+lines: 90
+functions: 80
+branches: 85
+statements: 90
+
+files:
+  - 'lib/**/*.test.js'

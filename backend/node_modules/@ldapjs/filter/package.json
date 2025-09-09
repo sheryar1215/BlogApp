@@ -1,0 +1,48 @@
+{
+  "originalAuthor": "Patrick Mooney",
+  "originalContributors": [
+    "Mark Cavage <mcavage@gmail.com>",
+    "Cody Peter Mello <cody.mello@joyent.com>"
+  ],
+  "name": "@ldapjs/filter",
+  "homepage": "https://github.com/ldapjs/filter",
+  "description": "API for handling LDAP-style filters",
+  "version": "2.1.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ldapjs/filter.git"
+  },
+  "main": "lib/index.js",
+  "directories": {
+    "lib": "./lib"
+  },
+  "dependencies": {
+    "@ldapjs/asn1": "2.0.0",
+    "@ldapjs/protocol": "^1.2.1",
+    "process-warning": "^2.1.0"
+  },
+  "devDependencies": {
+    "@fastify/pre-commit": "^2.0.2",
+    "@ldapjs/attribute": "1.0.0-rc.5",
+    "eslint": "^8.34.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "tap": "^16.3.4"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "lint:ci": "eslint .",
+    "test": "tap --no-coverage-report",
+    "test:cov": "tap",
+    "test:cov:html": "tap --coverage-report=html",
+    "test:watch": "tap -w --no-coverage-report"
+  },
+  "precommit": [
+    "lint",
+    "test"
+  ]
+}
